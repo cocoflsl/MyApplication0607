@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ScrollView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -37,6 +38,8 @@ public class PostDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_detail);
+
+        ScrollView scrollView = findViewById(R.id.scrollView);
 
         menuButton = findViewById(R.id.btn_menu);
         //menuButton.setVisibility(View.GONE); // Initially hidden

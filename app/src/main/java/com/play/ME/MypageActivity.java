@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,10 +26,9 @@ import com.google.firebase.database.ValueEventListener;
 public class MypageActivity extends AppCompatActivity {
 
     private TextView tvName, tvEmail;
-    private Button btnLogout, btnDeleteAccount, btnMyPosts, btnMyComments, btnScrap;
-    private ImageButton btnSettings, btnProfileImage;
+    private ImageButton btnSettings, btnProfileImage, btnMyPosts, btnMyComments, btnScrap;
 
-    private FirebaseAuth mFirebaseAuth;
+    private FirebaseAuth mAuth;
     private DatabaseReference mDatabaseRef;
 
     @Override
@@ -46,13 +44,11 @@ public class MypageActivity extends AppCompatActivity {
         tvEmail = findViewById(R.id.tv_email);
         btnProfileImage = findViewById(R.id.btn_profile_image);
         btnSettings = findViewById(R.id.btn_settings);
-        btnLogout = findViewById(R.id.btn_logout);
-        btnDeleteAccount = findViewById(R.id.btn_delete_account);
         btnMyPosts = findViewById(R.id.btn_my_posts);
         btnMyComments = findViewById(R.id.btn_my_comments);
         btnScrap = findViewById(R.id.btn_scrap);
 
-        mFirebaseAuth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("takeiteasy");
 
         loadUserProfile();
@@ -60,7 +56,7 @@ public class MypageActivity extends AppCompatActivity {
         btnSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MypageActivity.this, SeoljeongActivity.class);
+                Intent intent = new Intent(MypageActivity.this, EditProfileActivity.class);
                 startActivity(intent);
             }
         });
@@ -68,36 +64,22 @@ public class MypageActivity extends AppCompatActivity {
         btnProfileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Implement profile image change
                 Toast.makeText(MypageActivity.this, "Change Profile Image", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showConfirmationDialog("로그아웃 하시겠습니까?");
-            }
-        });
-
-        btnDeleteAccount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showConfirmationDialog("회원탈퇴 하시겠습니까?");
             }
         });
 
         btnMyPosts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MypageActivity.this, WrittenedPostActivity.class));
+                Intent intent = new Intent(MypageActivity.this, WrittenPostActivity.class);
+                startActivity(intent);
             }
         });
 
         btnMyComments.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MypageActivity.this, WrittenedAnswerActivity.class));
+                startActivity(new Intent(MypageActivity.this, WrittenAnswerActivity.class));
             }
         });
 
@@ -108,7 +90,7 @@ public class MypageActivity extends AppCompatActivity {
             }
         });
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation_view);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -117,9 +99,10 @@ public class MypageActivity extends AppCompatActivity {
                     startActivity(new Intent(MypageActivity.this, CommunityActivity.class));
                     return true;
                 } else if (itemId == R.id.nav_home) {
-                    startActivity(new Intent(MypageActivity.this, HomeActivity.class));
+                    startActivity(new Intent(MypageActivity.this, MainActivity.class));
                     return true;
                 } else if (itemId == R.id.nav_mypage) {
+                    startActivity(new Intent(MypageActivity.this, MypageActivity.class));
                     return true;
                 }
                 return false;
@@ -128,7 +111,7 @@ public class MypageActivity extends AppCompatActivity {
     }
 
     private void loadUserProfile() {
-        FirebaseUser user = mFirebaseAuth.getCurrentUser();
+        FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
             String userId = user.getUid();
             mDatabaseRef.child("UserAccount").child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -154,7 +137,6 @@ public class MypageActivity extends AppCompatActivity {
                 .setMessage(message)
                 .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        // Add your logout or delete account logic here
                         Toast.makeText(MypageActivity.this, message, Toast.LENGTH_SHORT).show();
                     }
                 })

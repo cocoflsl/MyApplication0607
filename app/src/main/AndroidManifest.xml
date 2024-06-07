@@ -13,10 +13,10 @@
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
         <activity
-            android:name=".EditPostActivity"
+            android:name=".CreatePostActivity"
             android:exported="false" />
         <activity
-            android:name=".CreatePostActivity"
+            android:name=".CommunityActivity"
             android:exported="false" />
         <activity
             android:name=".SuccessActivity"
@@ -30,27 +30,61 @@
         <activity
             android:name=".PostDetailActivity"
             android:exported="false" />
+        <activity
+            android:name=".MypageActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".EditPostActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EditProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CalendarActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DateDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Todo"
+            android:exported="false" />
+        <activity
+            android:name=".TodoAdapter"
+            android:exported="false" />
+        <activity
+            android:name=".WrittenPostActivity"
+            android:exported="false" />
+        <activity
+            android:name=".WrittenAnswerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ScrappedActivity"
+            android:exported="false" />
         <activity
             android:name=".SplashActivity"
-            android:theme="@style/SplashTheme"
-            android:exported="true" >
+            android:exported="true"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".LoginActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>
